@@ -1,11 +1,9 @@
 package main
 
 import (
-  //"strings"
+// "strings"
 )
 
-func main()  {
-  startRepl()
+func main() {
+	startRepl()
 }
-
-
