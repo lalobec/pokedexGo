@@ -18,6 +18,14 @@ func TestCleanInput(t *testing.T) {
       input: "Charmander   Bulbasaur PIKaChu",
       expected: []string{"charmander", "bulbasaur", "pikachu"},
     },
+    {
+      input: "    ",
+      expected: []string{},
+    },
+    {
+      input: "  hellOo o  ",
+      expected: []string{"helloo", "o"},
+    },
     // We can add more cases here
   }
 
@@ -27,14 +35,14 @@ func TestCleanInput(t *testing.T) {
     actual := cleanInput(c.input)
 
     if len(actual) != len(c.expected) {
-      t.Errorf("Test failed \n Expecting \n %v \n Result was: \n %v \n", c.expected, actual)
+      t.Errorf("Test failed ------ \n Expected: %v \n Actual: %v", c.expected, actual)
     }
 
     for i := range actual {
       word := actual[i]
       expectedWord := c.expected[i]
       if word != expectedWord {
-        t.Errorf("Test failed, words not coincide")
+        t.Errorf("Test failed ----- \n Expected: %v \n Actual: %v", expectedWord, word)
       }
     }
   }
