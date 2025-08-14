@@ -3,7 +3,7 @@ package main
 type dataLoc struct {
 	Count    int     `json:"count"`
 	Next     string  `json:"next"`
-	Previous *string `json:"previous"`
+	Previous string `json:"previous"`
 	Results  []cityloc   `json:"results"`
 }
 

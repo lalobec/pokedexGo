@@ -21,9 +21,15 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "Show the locations of the map",
+			description: "Show the next 20 locations of the map",
 			callback:    commandMap,
 		},
+		"mapb": {
+			name:        "mapb",
+			description: "Show the previous 20 locations of the map",
+			callback:    commandMapBack,
+		},
+
 		"exit": {
 			name:        "exit",
 			description: "Exit the Pokedex",
@@ -42,7 +48,10 @@ func commandMap(c *config) error {
 	CommandMap(c)
 	return nil
 }
-
+func commandMapBack(c *config) error {
+	CommandMapBack(c)
+	return nil
+}
 func commandHelp(c *config) error {
 	fmt.Print("Welcome to the Pokedex!\n")
 	fmt.Println("Usage:")
