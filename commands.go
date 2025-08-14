@@ -9,7 +9,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(c *config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -19,6 +19,11 @@ func getCommands() map[string]cliCommand {
 			description: "Displays a help message",
 			callback:    commandHelp,
 		},
+		"map": {
+			name:        "map",
+			description: "Show the locations of the map",
+			callback:    commandMap,
+		},
 		"exit": {
 			name:        "exit",
 			description: "Exit the Pokedex",
@@ -27,13 +32,18 @@ func getCommands() map[string]cliCommand {
 	}
 }
 
-func commandExit() error {
+func commandExit(c *config) error {
 	fmt.Print("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
 }
 
-func commandHelp() error {
+func commandMap(c *config) error {
+	CommandMap(c)
+	return nil
+}
+
+func commandHelp(c *config) error {
 	fmt.Print("Welcome to the Pokedex!\n")
 	fmt.Println("Usage:")
 	cmdmap := getCommands()
