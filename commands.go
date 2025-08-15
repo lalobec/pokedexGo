@@ -1,10 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
-
 // This struct describes a cmd for our REPL
 type cliCommand struct {
 	name        string
@@ -36,20 +31,4 @@ func getCommands() map[string]cliCommand {
 			callback:    commandExit,
 		},
 	}
-}
-
-func commandExit(c *config) error {
-	fmt.Print("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
-}
-
-func commandHelp(c *config) error {
-	fmt.Print("Welcome to the Pokedex!\n")
-	fmt.Println("Usage:")
-	cmdmap := getCommands()
-	for _, cmd := range cmdmap {
-		fmt.Printf("%s: %s \n", cmd.name, cmd.description)
-	}
-	return nil
 }
