@@ -3,17 +3,21 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/lalobec/pokedexGo/internal/pokeapi"
 	"os"
 	"strings"
 )
 
-func startRepl() {
+type config struct {
+	pokeapiClient pokeapi.Client
+	nextLocs      *string
+	previousLocs  *string
+}
+
+func startRepl(c *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	var input string
-  c_real := config{
-    Next: "",
-    Previous: "",
-  }
+	
 	for true {
 		fmt.Print("Pokedex > ")
 		if scanner.Scan() {
@@ -26,16 +30,16 @@ func startRepl() {
 
 			command, exists := getCommands()[commandName]
 			if exists {
-				err := command.callback(&c_real)
+				err := command.callback(c)
 				if err != nil {
 					fmt.Println(err)
 					continue
-				} 
-       				
+				}
+
 			} else {
 				fmt.Println("Unknown command")
 				continue
-      }
+			}
 		}
 	}
 }

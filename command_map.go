@@ -2,63 +2,44 @@ package main
 
 import (
   "fmt"
-  "net/http"
-  "encoding/json"
-  "io"
-  "log"
+  "errors"
 )
 
 
-func CommandMap(c *config) {
-  if c.Next == "" {
-    c.Next = "https://pokeapi.co/api/v2/location-area/"
-  }
-  res, err := http.Get(c.Next)
+func commandMapf(c *config) error {
+
+  // the passed c pointer to the config struct has a field pokeapiClient
+  // which is a Client struct, so it has the method LocList... 
+  locationsResp, err := c.pokeapiClient.LocList(c.nextLocs)
   if err != nil {
-    log.Fatal(err)
-  }
-  body, err := io.ReadAll(res.Body)
-  res.Body.Close()
-
-  var locationArea dataLoc 
-  err2 := json.Unmarshal(body, &locationArea)
-  if err2 != nil {
-    fmt.Printf("Error in unmarshal ... %v \n", err2)
+    return err
   }
 
-  for _, loc := range locationArea.Results {
+  c.nextLocs = locationsResp.Next
+  c.previousLocs = locationsResp.Previous
+
+  for _, loc := range locationsResp.Results {
     fmt.Println(loc.Name)
   }
-
-  c.Next = locationArea.Next
-  c.Previous = locationArea.Previous
-  //fmt.Printf("Testing the pointer to next ... %v \n", c.Next)
-
+  return nil
 }
 
-func CommandMapBack(c *config) {
-  if c.Previous == "" {
-    c.Previous = "https://pokeapi.co/api/v2/location-area/"
+func commandMapb(c *config) error {
+  if c.previousLocs == nil {
+    return errors.New("You are on the first page")
   }
-  res, err := http.Get(c.Previous)
+
+  locationsResp, err := c.pokeapiClient.LocList(c.previousLocs)
   if err != nil {
-    log.Fatal(err)
-  }
-  body, err := io.ReadAll(res.Body)
-  res.Body.Close()
-
-  var locationArea dataLoc 
-  err2 := json.Unmarshal(body, &locationArea)
-  if err2 != nil {
-    fmt.Printf("Error in unmarshal ... %v \n", err2)
+    return err
   }
 
-  for _, loc := range locationArea.Results {
+  c.nextLocs = locationsResp.Next
+  c.previousLocs = locationsResp.Previous
+
+  for _, loc := range locationsResp.Results {
     fmt.Println(loc.Name)
   }
+  return nil
+ }
 
-  c.Next = locationArea.Next
-  c.Previous = locationArea.Previous
-  //fmt.Printf("Testing the pointer to next ... %v \n", c.Next)
-
-}
