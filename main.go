@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-  pokeClient := pokeapi.NewClient(5*time.Second)
+  pokeClient := pokeapi.NewClient(5*time.Second, 5*time.Second)
 
   // Create a config struct and store it in c, that will
   // hold the pokeClient.
