@@ -54,9 +54,9 @@ func (c *Client) LocList(pageURL *string) (DecLocations, error) {
 		if err != nil {
 			return DecLocations{}, err
 		}
-    fmt.Println("---------------------------")
+    fmt.Println("------------------------------------")
 		fmt.Println("Locations were requested to the web")
-    fmt.Println("---------------------------")
+    fmt.Println("------------------------------------")
 		return locationsResp, nil
 	}
 }
