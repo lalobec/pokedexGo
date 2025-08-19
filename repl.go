@@ -14,7 +14,7 @@ type config struct {
 	previousLocs  *string
 }
 
-func startRepl(c *config) {
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	var input string
 	
@@ -30,7 +30,7 @@ func startRepl(c *config) {
 
 			command, exists := getCommands()[commandName]
 			if exists {
-				err := command.callback(c)
+				err := command.callback(cfg)
 				if err != nil {
 					fmt.Println(err)
 					continue

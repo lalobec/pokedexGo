@@ -2,37 +2,42 @@ package pokeapi
 
 import (
 	"encoding/json"
-	"fmt"
+//	"fmt"
 	"io"
 	"net/http"
 )
 
-func (c *Client) LocDetails(url string) (LocationDetails, error) {
+func (c *Client) PokemonList(url string) ([]string, error) {
+  
+  var pokemonList []string
 
 	// Create the request
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return LocationDetails{}, err
+		return []string{}, err
 	}
 
 	// Do the request
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return LocationDetails{}, err
+		return []string{}, err
 	}
 	defer resp.Body.Close()
 
 	dat, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return LocationDetails{}, err
+		return []string{}, err
 	}
 
 	locDetails := LocationDetails{}
 	err = json.Unmarshal(dat, &locDetails)
 	if err != nil {
-		return LocationDetails{}, err
+		return []string{}, err
 	}
 
-  fmt.Println("It is time for some testing")
-  return locDetails, nil
+  for _, poke := range locDetails.PokemonEncounters {
+    pokemonList = append(pokemonList, poke.Pokemon.Name)
+  }
+
+  return pokemonList, nil
 }
