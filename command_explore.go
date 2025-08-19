@@ -5,9 +5,8 @@ import (
   "fmt"
 )
 
-func commandExplore(cfg *config) error {
-  url := "https://pokeapi.co/api/v2/location-area/canalave-city-area"
-  pokeList, err := cfg.pokeapiClient.PokemonList(url)  
+func commandExplore(cfg *config, location string) error {
+  pokeList, err := cfg.pokeapiClient.PokemonList(location)  
   if err != nil {
     return err
   }

@@ -7,8 +7,9 @@ import (
 	"net/http"
 )
 
-func (c *Client) PokemonList(url string) ([]string, error) {
+func (c *Client) PokemonList(location string) ([]string, error) {
   
+	url := baseURL + "/location-area/" + location
   var pokemonList []string
 
 	// Create the request
