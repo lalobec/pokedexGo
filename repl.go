@@ -16,38 +16,33 @@ type config struct {
 
 func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
-	var input string
 
 	for true {
 		fmt.Print("Pokedex > ")
-		if scanner.Scan() {
-			input = scanner.Text()
-			if len(input) == 0 {
+		scanner.Scan()
+
+		words := cleanInput(scanner.Text())
+		if len(words) == 0 {
+			continue
+		}
+
+		commandName := words[0]
+		args := []string{}
+		if len(words) > 1 {
+			args = words[1:]
+		}
+
+		command, exists := getCommands()[commandName]
+		if exists {
+			err := command.callback(cfg, args...)
+			if err != nil {
+				fmt.Println(err)
 				continue
 			}
 
-			commandName := cleanInput(input)[0]
-
-			command, exists := getCommands()[commandName]
-			if exists {
-				if commandName == "explore" {
-					err := command.callback(cfg, cleanInput(input)[1])
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-
-				} else {
-					err := command.callback(cfg, "")
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-				}
-			} else {
-				fmt.Println("Unknown command")
-				continue
-			}
+		} else {
+			fmt.Println("Unknown command")
+			continue
 		}
 	}
 }

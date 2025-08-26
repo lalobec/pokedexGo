@@ -6,7 +6,7 @@ import (
 )
 
 
-func commandMapf(cfg *config, s string) error {
+func commandMapf(cfg *config, args ...string) error {
 
   // the passed cfg pointer to the config struct has a field pokeapiClient
   // which is a Client struct, so it has the method LocList... 
@@ -24,7 +24,7 @@ func commandMapf(cfg *config, s string) error {
   return nil
 }
 
-func commandMapb(cfg *config, s string) error {
+func commandMapb(cfg *config, args ...string) error {
   if cfg.previousLocs == nil {
     return errors.New("You are on the first page")
   }

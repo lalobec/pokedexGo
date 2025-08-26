@@ -4,7 +4,7 @@ package main
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(c *config, loc string) error
+	callback    func(c *config, args ...string) error
 }
 
 func getCommands() map[string]cliCommand {
