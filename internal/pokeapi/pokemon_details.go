@@ -2,7 +2,7 @@ package pokeapi
 
 import (
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"io"
 	"net/http"
 )
@@ -33,9 +33,9 @@ func (c *Client) PokemonStats(pokemonName string) (PokemonType, error) {
 		return PokemonType{}, err
 	}
 
-	fmt.Println("----------------------------------")
-	fmt.Println("Pokemon data requested to the web")
-	fmt.Println("----------------------------------")
+	//fmt.Println("----------------------------------")
+	//fmt.Println("Pokemon data requested to the web")
+	//fmt.Println("----------------------------------")
 
 	return pokemonStats, nil
 }

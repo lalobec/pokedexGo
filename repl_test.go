@@ -50,7 +50,7 @@ func TestCleanInput(t *testing.T) {
 
 
 // ----------------------------------------//
-// Tests for the command_explore function //
+// Tests for the commandCatch function //
 // ----------------------------------------//
 
 

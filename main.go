@@ -12,6 +12,7 @@ func main() {
   // hold the pokeClient.
   c := &config{
     pokeapiClient: pokeClient,
+		pokedex: make(map[string]pokeapi.PokemonType),
   }
 
   // Pass the c config to the REPL so that it has
